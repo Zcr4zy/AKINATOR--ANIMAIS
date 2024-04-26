@@ -41,7 +41,7 @@
   <script>
     $(document).ready(function () {
       //#region Inserção de imagens diversas para o Akinator com base em um número aleatório 
-      
+
       function getRandomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
       }
@@ -76,7 +76,13 @@
               inp.val('')
               pergunta.text("O animal é Quadrúpede?")
               $('img').attr('src', selectedImage)
-              
+
+              botao.click(() => {
+                inputv
+                if (inputv == "SIM") {
+                  inp.val('')
+                }
+              })
             }
           })
 
@@ -84,7 +90,7 @@
       });
 
 
-      
+
 
     });
   </script>
