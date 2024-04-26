@@ -1,0 +1,11 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "tarefa-PROJETO AKINATOR __JQUERY",
+      "appliesTo": "/",
+      "type": "launch",
+      "args": ["index.html"]
+    }
+  ]
+}

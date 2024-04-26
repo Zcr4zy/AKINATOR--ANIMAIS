@@ -1,0 +1,6 @@
+if
+	pergunta
+	limpar input
+	
+	event button
+		pegar valor input
