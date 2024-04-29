@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teste Akinator</title>
+  <title>Akinator</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -14,16 +14,18 @@
 </head>
 
 <body>
-  <img src="AKINATOR-IMGs/logo_akinator.png " class="img-fluid" style="text-align: center; position: absolute; top: 0px;" alt=""><br>
+  <img src="AKINATOR-IMGs/logo_akinator.png" class="img-fluid" style="text-align: center; position: absolute; top: 0px;"
+    alt=""><br>
   <div class="container-md text-center">
     <div class="row">
       <div class="col-md-6 col-sm-10">
-        <img src="AKINATOR-IMGs/defi.png" alt="Genio da lâmpada" class="img-fluid img-akinator" style="margin-top: 20%; ">
+        <img src="AKINATOR-IMGs/defi.png" alt="Genio da lâmpada" class="img-fluid img-akinator"
+          style="margin-top: 20%; ">
       </div>
       <div class="col-md-6" style="display: flex; flex-direction: column; justify-content: center;">
         <label id="texto">O animal é Mamífero?</label>
         <input type="text" id="input" class="form-control mb-3">
-        <button class="btn btn-success">Próximo</button>
+        <button class="btn btn-success" id="btn-next">Próximo</button>
       </div>
     </div>
   </div>
@@ -41,7 +43,14 @@
 
   <script>
     $(document).ready(function () {
-      //#region Inserção de imagens diversas para o Akinator com base em um número aleatório 
+      $("#input").on({
+        keyup: () => {
+          let maior = $("#input").val().toUpperCase();
+          $("#input").val(maior)
+        }
+      })
+
+      //#region Inserção de imagens diversas com base em um número aleatório 
 
       function getRandomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -57,43 +66,227 @@
         "AKINATOR-IMGs/concentration_intense_1.png"
       ];
 
-      const randomIndex = getRandomNumber(0, images.length - 1);
-      const selectedImage = images[randomIndex];
+
+      
       //#endregion
+      $('button').click(() => {
 
+        const input = $('#input').val().toUpperCase()
+        const pergunta = $('#texto');
+        const randomIndex = getRandomNumber(0, images.length - 1);
+        const selectedImage = images[randomIndex];
+        const imgAkinator = $('.img-akinator').attr('src', selectedImage)
 
-      $("#input").on({
-        keyup: () => {
-          let maior = $("#input").val().toUpperCase();
-          $("#input").val(maior)
+        //#region MAMÍFEROS
+        if (pergunta.text() === "O animal é Mamífero?" && input === 'SIM') {
+          pergunta.text('O animal é um Quadrúpede?')
 
-          var inp = $('#input')
-          var inputv = inp.val()
-          var botao = $('button')
-          var pergunta = $('label')
+          $("#input").val('');
+        }
+        else if (pergunta.text() === "O animal é um Quadrúpede?" && input === 'SIM') {
+          pergunta.text('O animal é um Carnívoro?')
 
-          botao.click(() => {
-            if (inputv == 'SIM') {
-              inp.val('')
-              pergunta.text("O animal é Quadrúpede?")
-              $('.img-akinator').attr('src', selectedImage)
-
-              botao.click(() => {
-                inputv
-                if (inputv == "SIM") {
-                  inp.val('')
-                }
-              })
-            }
+          $("#input").val('');
+        }
+        else if (pergunta.text() === "O animal é um Carnívoro?" && input === 'SIM') {
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é um LEÃO!')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
           })
+        }
+        else if (pergunta.text() === "O animal é um Carnívoro?" && input === 'NÃO' || pergunta.text() === "O animal é um Carnívoro?" && input === 'NAO') {
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é um CAVALO')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
+          })
+        }
+
+
+
+        else if (pergunta.text() === "O animal é um Quadrúpede?" && input === 'NÃO' || pergunta.text() === "O animal é um Quadrúpede?" && input === 'NAO') {
+          pergunta.text('O animal é um Bípede?')
+          $("#input").val('');
+        }
+        else if (pergunta.text() === "O animal é um Bípede?" && input === 'SIM') {
+          pergunta.text('O animal é um Onívoro?')
+          $("#input").val('');
 
         }
+        else if (pergunta.text() === "O animal é um Onívoro?" && input === 'SIM') {
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é um SER HUMANO')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
+          })
+        }
+        else if (pergunta.text() === "O animal é um Onívoro?" && input === 'NÃO' || pergunta.text() === "O animal é um Onívoro?" && input === 'NAO') {
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é um MACACO')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
+          })
+        }
+
+
+
+        else if (input === 'NÃO' && pergunta.text() === "O animal é um Bípede?" || input === 'NAO' && pergunta.text() === "O animal é um Bípede?") {
+          pergunta.text('O animal é Voador?')
+          $("#input").val('');
+        }
+        else if (pergunta.text() === "O animal é Voador?" && input === "SIM") {
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é um MORCEGO')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
+          })
+        }
+
+        else if (input === "NÃO" && pergunta.text() === "O animal é Voador?" || input === "NAO" && pergunta.text() === "O animal é Voador?") {
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é uma BALEIA')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
+          })
+        }
+        //#endregion
+
+        //#region AVES
+        else if (pergunta.text() === "O animal é Mamífero?" && input === "NÃO" || pergunta.text() === "O animal é Mamífero?" && input === "NAO") {
+          pergunta.text("O animal é uma Ave?")
+          $("#input").val('');
+
+        }
+
+        else if (pergunta.text() === "O animal é uma Ave?" && input === "SIM") {
+          pergunta.text("Essa ave voa?")
+          $("#input").val('');
+        }
+
+        else if (pergunta.text() === "Essa ave voa?" && input === "NÃO" || pergunta.text() === "Essa ave voa?" && input === "NAO") {
+          pergunta.text("Essa ave é Polar?")
+          $("input").val('')
+        }
+
+        else if(pergunta.text() === "Essa ave é Polar?" && input === "SIM"){
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é um PINGUIM')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
+          })
+        }
+
+        else if(pergunta.text() === "Essa ave é Polar?" && input === "NÃO" || pergunta.text() === "Essa ave é Polar?" && input === "NAO"){
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é um AVESTRUZ')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
+          })
+        }
+
+        else if(pergunta.text() === "Essa ave voa?" && input === "SIM"){
+          pergunta.text("Essa ave sabe nadar?")
+          $('input').val('')
+        }
+
+        else if(pergunta.text() === "Essa ave sabe nadar?" && input === "SIM"){
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é um PATO')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
+          })
+        }
+
+        else if(pergunta.text() === "Essa ave sabe nadar?" && input === "NAO" ||pergunta.text() === "Essa ave sabe nadar?" && input === "NÃO"){
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é uma ÁGUIA')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
+          })
+        }
+
+        //#endregion
+
+        //#region RÉPTEIS
+        else if(pergunta.text === "O animal é uma Ave?" && input === "NAO" || pergunta.text === "O animal é uma Ave?" && input === "NÃO"){
+          pergunta.text('Esse réptil possui casco?')
+          $('input').val('')
+        }
+
+        else if (pergunta.text === "Esse réptil possui casco?" && input === "SIM"){
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é uma TARTARUGA')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
+          })
+        }
+
+
+        else if(pergunta.text === "Esse réptil possui casco?" && input === "NAO" || pergunta.text === "Esse Réptil possui casco?" && input === "NÃO"){
+          pergunta.text('Esse réptil possui patas?')
+          $('input').val('')
+        }
+
+        else if (pergunta.text === "Esse réptil possui patas?" && input === "SIM"){
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é um CROCODILO')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
+          })
+        }
+
+        else if(pergunta.text === "Esse réptil possui patas?" && input === "NAO" || pergunta.text === "Esse réptil possui patas?" && input === "NÃO"){
+          imgAkinator.attr('src', "AKINATOR-IMGs/triomphe.png")
+          pergunta.text('O animal é uma COBRA')
+          $('button').hide()
+          $('input').hide()
+          pergunta.css({
+            fontSize: "30px"
+          })
+        }
+        //#endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       });
-
-
-
-
-    });
+    })
   </script>
 </body>
 
